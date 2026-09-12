@@ -140,6 +140,7 @@ import BarChart from './BarChart.vue';
 import { useFavoriteStore } from '../stores/favoriteStore';
 import { useEventFilterStore } from '../stores/eventFilterStore';
 import EventTypeFilterList from './filter/EventTypeFilterList.vue';
+import { watch, onUnmounted } from 'vue'
 
 const favoriteStore = useFavoriteStore();
 const eventFilterStore = useEventFilterStore();
@@ -223,6 +224,28 @@ watch(
     load
 )
 
+watch(
+  () => props.store.object?.name,
+  (name) => {
+    document.title = name
+      ? `${name} — Legends Viewer`
+      : 'Legends Viewer'
+  },
+  { immediate: true }
+)
+
+onUnmounted(() => {
+  document.title = 'Legends Viewer'
+})
+
+router.afterEach((to) => {
+  if (!to.params.id) {
+    document.title = to.name
+      ? `${String(to.name)} — Legends Viewer`
+      : 'Legends Viewer'
+  }
+})
+    
 </script>
 
 
