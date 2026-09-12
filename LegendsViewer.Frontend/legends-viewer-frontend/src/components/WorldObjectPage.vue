@@ -131,7 +131,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, watch, onUnmounted} from 'vue';
 import { useRoute } from 'vue-router';
 import { LoadItemsOptions, LoadItemsSortOption, TableHeader } from '../types/legends';
 import LineChart from '../components/LineChart.vue';
@@ -140,7 +140,6 @@ import BarChart from './BarChart.vue';
 import { useFavoriteStore } from '../stores/favoriteStore';
 import { useEventFilterStore } from '../stores/eventFilterStore';
 import EventTypeFilterList from './filter/EventTypeFilterList.vue';
-import { watch, onUnmounted } from 'vue'
 
 const favoriteStore = useFavoriteStore();
 const eventFilterStore = useEventFilterStore();
@@ -236,14 +235,6 @@ watch(
 
 onUnmounted(() => {
   document.title = 'Legends Viewer'
-})
-
-router.afterEach((to) => {
-  if (!to.params.id) {
-    document.title = to.name
-      ? `${String(to.name)} — Legends Viewer`
-      : 'Legends Viewer'
-  }
 })
     
 </script>
