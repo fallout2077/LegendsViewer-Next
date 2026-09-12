@@ -84,4 +84,12 @@ const router = createRouter({
   routes,
 })
 
+router.afterEach((to) => {
+  if (!to.params.id) {
+    document.title = to.name
+      ? `${String(to.name)} — Legends Viewer`
+      : 'Legends Viewer'
+  }
+})
+
 export default router;
